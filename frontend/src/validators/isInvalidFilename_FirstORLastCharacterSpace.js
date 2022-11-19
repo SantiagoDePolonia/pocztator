@@ -8,6 +8,7 @@ function isInvalidFilename_FirstORLastCharacterSpace(filename) {
   const nameWithoutExtension = filename.toLowerCase().replace(getExtension(filename), "");
   const isLastCharacterSpace = nameWithoutExtension[nameWithoutExtension.length -1 ] === " ";
   if(isFirstCharacterSpace || isLastCharacterSpace) {
+
     return {
       id: "WT_2_5_b",
       message: "Spacje wiodące i końcowe w nazwach plików lub folderów nie są dozwolone"

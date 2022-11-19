@@ -52,6 +52,15 @@ function PocztatorForm() {
           This is an error alert — <strong>check it out!</strong>
         </Alert>
       }
+      <div>
+        <a
+          target="_blank"
+          rel="noreferrer"
+          href="https://mc.bip.gov.pl/fobjects/download/999150/do-publikacji-minimalne_wymagania_techniczne_v-1-0-pdf.html"
+        >
+          Wymagania techniczne pliku
+        </a>
+      </div>
     </>
   );
 }
