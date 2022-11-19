@@ -5,7 +5,7 @@ import getExtension from "./helpers/getExtension";
 function isInvalidFilename_FirstORLastCharacterSpace(filename) {
   const isFirstCharacterSpace = filename[0] === " ";
 
-  const nameWithoutExtension = filename.toLowerCase().replace(getExtension(filename), "");
+  const nameWithoutExtension = filename.toLowerCase().replace("."+getExtension(filename), "");
   const isLastCharacterSpace = nameWithoutExtension[nameWithoutExtension.length -1 ] === " ";
   if(isFirstCharacterSpace || isLastCharacterSpace) {
 

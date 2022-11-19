@@ -5,7 +5,7 @@ import logo from "../logo.png";
 
 function App() {
   return (
-    <div className="App">
+    <div>
       <header style={{textAlign:"center"}}>
         <img src={logo} alt="Pocztator" style={{maxWidth:"300px"}} />
       </header>

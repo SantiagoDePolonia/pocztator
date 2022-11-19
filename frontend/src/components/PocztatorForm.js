@@ -1,16 +1,16 @@
-import { Alert, AlertTitle, Button } from "@mui/material";
+import { Alert, AlertTitle, Button, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import validators from '../validators';
+
+import pocztaLogo from '../poczta-polska-logo.png';
 
 function PocztatorForm() {
   const [selectedFile, setSelectedFile] = useState(undefined);
   const [errors, setErrors] = useState(undefined);
   const [valid, setValid] = useState(false);
 
-
   useEffect(() => {
     if(!!selectedFile) {
-      console.log("selectedFile", selectedFile);
 
       // 1. VALIDATE NAME
       const filename = selectedFile.name;
@@ -26,33 +26,45 @@ function PocztatorForm() {
       setValid(!errors.length);
       // 2. VALIDATE MARGINS ON THE BACKEND
     }
-  }, [selectedFile, errors]);
+  }, [selectedFile, setErrors, setSelectedFile]);
   
-  const errorsMapped = errors.map(error)
+  const errorsMapped = errors?.map(error => (<span key={error.id}>
+    {error.id}: <i>{error.message}</i><br />
+  </span>)) || [];
+
   return (
     <>
-      <Button fullWidth style={{marginTop:"2em"}} variant={"contained"} pt={3} pb={3} component="label">
-        Wgraj plik do weryfikacji dla Poczty Polskiej
+      {selectedFile && 
+        <Typography variant={"h6"} style={{textAlign:"center"}}>{selectedFile.name}</Typography>
+      }
+      <Button fullWidth style={{marginTop:"2em", marginBottom: "2em"}} variant={"contained"} pt={3} pb={3} component="label">
+        <Typography variang="h4">Wgraj plik do walidacji</Typography>
         <input
           hidden
           type='file'
           onChange={(e) => setSelectedFile(e.target.files[0])}
         />
       </Button>
-      {valid && 
+
+      {!!errors?.length &&
+        <Alert severity="error">
+          <AlertTitle><strong>Plik NIEPOPRAWNY</strong> - popraw poniższe błędy</AlertTitle>
+          {errorsMapped}
+        </Alert>
+      }
+
+      {valid && <>
         <Alert severity="success">
           <AlertTitle>Poprawny!</AlertTitle>
-          Twój plik jest poprawny i moze być wysłany do Poczty Polskiej
+          Twój plik jest poprawny i może być wysłany do Poczty Polskiej
         </Alert>
-      }
-      {errors.length &&
-        <Alert severity="error">
-          <AlertTitle>Plik NIEPOPRAWNY</AlertTitle>
-          Popraw ponizsze błędy
-          This is an error alert — <strong>check it out!</strong>
-        </Alert>
-      }
-      <div>
+        <Typography variant="h5" style={{marginTop: "2em", marginBottom: "1em", textAlign: "center"}}>
+          Możesz bezpiecznie wysłać plik do Poczty Polskiej<br />
+          <img src={pocztaLogo} alt="Poczta Polska - logo" style={{marginTop:"1em", maxWidth:"150px"}} />
+        </Typography>
+      </>}
+
+      <div style={{marginTop:"6em", textAlign: "center"}}>
         <a
           target="_blank"
           rel="noreferrer"

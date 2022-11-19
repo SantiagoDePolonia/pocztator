@@ -15,11 +15,11 @@ Zwracaj JSON:
     valid: false,
     errors: {
 				WT_NOT_PDF: "Podany plik, nie jest plikiem PDF",
-        WT_2_5_a: "Nazwa pliku zawiera niedozwolone znaki specjalne!",
+        WT_2_5_a: "Nazwa pliku zawiera niedozwolone znaki specjalne, takie jak:~\"#%&*:<>?!/\\{|}",
         WT_2_5_b: "Spacje wiodące i końcowe w nazwach plików lub folderów nie są dozwolone",
-				WT_2_5_c: "kodowanie znaków w UTF-8",
-				WT_2_5_d: "długość nazwy pliku wraz z rozszerzeniem max 255",
-				WT_2_7_a: "fonty muszą być osadzone w dokumencie",
+				WT_2_5_c: "Kodowanie znaków w UTF-8",
+				WT_2_5_d: "Długość nazwy pliku wraz z rozszerzeniem max 255",
+				WT_2_7_a: "Fonty muszą być osadzone w dokumencie",
 				WT_2_7_b: "minimalny stopień pisma drukowanego jednym kolorem: dla krojów jednoelementowych 5 pkt, dla krojów dwuelementowych 6 pkt",
 				WT_2_7_c: "minimalny stopień pisma drukowanego więcej niż 1 kolorem lub w kontrze: - dla krojów jednoelementowych 8 pkt, - dla krojów dwuelementowych 10 pkt,"
 				WT_2_9: "formularze - pliki PDF nie mogą zawierać aktywnych formularzy,"
