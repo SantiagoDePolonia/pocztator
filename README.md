@@ -1,5 +1,4 @@
-# pocztator
-
+# Pocztator
 
 #### TODO:
 
@@ -9,7 +8,7 @@ BACKEND:
 - zmiana nazwy plików na żądanie
 
 DWA ENDPOINTY:
-/validate
+/validatee
 Zwracaj JSON:
 ```
 {

@@ -2,10 +2,10 @@ const themeOptions = {
   palette: {
     type: "light",
     primary: {
-      main: "#ac0a0a",
+      main: "#5271ff",
     },
     secondary: {
-      main: "#b08b20",
+      main: "#96d8ff",
     },
     background: {
       default: "#ffffff",

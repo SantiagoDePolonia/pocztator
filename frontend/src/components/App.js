@@ -1,12 +1,13 @@
 
 import { Grid, Typography } from "@mui/material";
 import PocztatorForm from "./PocztatorForm";
+import logo from "../logo.png";
 
 function App() {
   return (
     <div className="App">
-      <header>
-        <Typography variant="h1">Logo</Typography>
+      <header style={{textAlign:"center"}}>
+        <img src={logo} alt="Pocztator" style={{maxWidth:"300px"}} />
       </header>
       <Grid
         container

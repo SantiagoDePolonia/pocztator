@@ -4,7 +4,10 @@ function isInvalidExtension(filename) {
   const fileExtension = getExtension(filename);
 
   if(fileExtension !== "pdf") {
-    return {"WT_NOT_PDF": "Podany plik, nie jest plikiem PDF"};
+    return {
+      id: "WT_NOT_PDF",
+      message:"Podany plik, nie jest plikiem PDF"
+    };
   }
 
   return false;

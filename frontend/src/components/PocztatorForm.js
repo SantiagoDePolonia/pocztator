@@ -1,40 +1,58 @@
-import { Button, FormGroup, Input } from "@mui/material";
+import { Alert, AlertTitle, Button } from "@mui/material";
 import { useEffect, useState } from "react";
 import validators from '../validators';
 
 function PocztatorForm() {
   const [selectedFile, setSelectedFile] = useState(undefined);
+  const [errors, setErrors] = useState(undefined);
+  const [valid, setValid] = useState(false);
+
 
   useEffect(() => {
     if(!!selectedFile) {
       console.log("selectedFile", selectedFile);
+
       // 1. VALIDATE NAME
       const filename = selectedFile.name;
-      let errors = {};
+      const errors = [];
       validators.forEach((fun) => {
         const result = fun(filename);
         if(result) {
-          errors = {...errors, ...result};
+          errors.push(result);
         }
       });
       
-      console.log("errors", errors);
-
+      setErrors(errors);
+      setValid(!errors.length);
       // 2. VALIDATE MARGINS ON THE BACKEND
     }
-  }, [selectedFile]);
-
+  }, [selectedFile, errors]);
+  
+  const errorsMapped = errors.map(error)
   return (
-    <FormGroup>
-      <Input
-        style={{marginTop: "5em"}}
-        type='file'
-        onChange={(e) => setSelectedFile(e.target.files[0])}
-      />
-      <Button style={{marginTop:"2em"}} variant={"contained"} pt={3} pb={3}>
+    <>
+      <Button fullWidth style={{marginTop:"2em"}} variant={"contained"} pt={3} pb={3} component="label">
         Wgraj plik do weryfikacji dla Poczty Polskiej
+        <input
+          hidden
+          type='file'
+          onChange={(e) => setSelectedFile(e.target.files[0])}
+        />
       </Button>
-    </FormGroup>
+      {valid && 
+        <Alert severity="success">
+          <AlertTitle>Poprawny!</AlertTitle>
+          Twój plik jest poprawny i moze być wysłany do Poczty Polskiej
+        </Alert>
+      }
+      {errors.length &&
+        <Alert severity="error">
+          <AlertTitle>Plik NIEPOPRAWNY</AlertTitle>
+          Popraw ponizsze błędy
+          This is an error alert — <strong>check it out!</strong>
+        </Alert>
+      }
+    </>
   );
 }
 
