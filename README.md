@@ -15,6 +15,7 @@ Zwracaj JSON:
     valid: false,
     errors: {
 				WT_NOT_PDF: "Podany plik, nie jest plikiem PDF",
+				WT_2_1: "Plik powinien być w orientacji pionowej",
         WT_2_5_a: "Nazwa pliku zawiera niedozwolone znaki specjalne, takie jak:~\"#%&*:<>?!/\\{|}",
         WT_2_5_b: "Spacje wiodące i końcowe w nazwach plików lub folderów nie są dozwolone",
 				WT_2_5_c: "Kodowanie znaków w UTF-8",

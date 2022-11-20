@@ -1,5 +1,5 @@
 
-import { Grid, Typography } from "@mui/material";
+import { Grid } from "@mui/material";
 import PocztatorForm from "./PocztatorForm";
 import logo from "../logo.png";
 

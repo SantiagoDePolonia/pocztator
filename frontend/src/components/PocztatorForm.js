@@ -3,15 +3,32 @@ import { useEffect, useState } from "react";
 import validators from '../validators';
 
 import pocztaLogo from '../poczta-polska-logo.png';
+import getExtension from "../validators/helpers/getExtension";
+
+// function getMetadata(raw) {
+//   var Pages = raw.match(/\/Type[\s]*\/Page[^s]/g).length;
+//   var regex = /<xmp.*?:(.*?)>(.*?)</g;
+//   var meta = [{
+//     Pages
+//   }];
+//   var matches = regex.exec(raw);
+//   while (matches != null) {
+//     matches.shift();
+//     meta.push({
+//       [matches.shift()]: matches.shift()
+//     });
+//     matches = regex.exec(raw);
+//   }
+//   console.log("meta", meta);
+// }
 
 function PocztatorForm() {
   const [selectedFile, setSelectedFile] = useState(undefined);
   const [errors, setErrors] = useState(undefined);
   const [valid, setValid] = useState(false);
-
+  console.log("PDFJS", window.PDFJS);
   useEffect(() => {
     if(!!selectedFile) {
-
       // 1. VALIDATE NAME
       const filename = selectedFile.name;
       const errors = [];
@@ -24,7 +41,59 @@ function PocztatorForm() {
       
       setErrors(errors);
       setValid(!errors.length);
-      // 2. VALIDATE MARGINS ON THE BACKEND
+      if(getExtension(selectedFile.name) !== 'pdf') {
+        return;
+      }
+      // 2. Reading PDF's and checking a few properties
+      let reader = new FileReader();
+      reader.onload = async (e) => {
+        try {
+          const additionalErrors = [];
+          const arrayBuffer = e.target.result;
+
+          const loadingTask = window.PDFJS.getDocument(arrayBuffer);
+
+          const pdf = await loadingTask.promise;
+
+          const page = await pdf.getPage(1);
+          const view = page.view;
+
+          // Is vertical?
+          if(view[2] >= view[3]) {
+            additionalErrors.push({
+              id: "WT_2_1",
+              message: "Plik powinien być w orientacji pionowej"
+            });
+          }
+
+          // Is A4?
+          const dimensions = page.getViewport(1).viewBox.map(n => Math.round(n / 72 * 30));
+          console.log("dimensions", dimensions);
+          if(view[2] != 248 || view[3] != 351) {
+            additionalErrors.push({
+              id: "WT_2_2",
+              message: "Podany plik nie jest w formacie A4"
+            });
+          }
+
+          console.log("page.view", page.view);
+          console.log("page", page);
+        } catch (e) {
+          if(e.message === "No password given") {
+            setErrors([...errors, {
+              id:"WD_2_4",
+              message: "Plik PDF nie powinien być zabezpieczony hasłem! Zdejmij blokadę przed wysłaniem"
+            }]);
+          } else {
+            setErrors([...errors, {
+              id:"WD_PDF_INWALID",
+              message: "Plik PDF jest niepoprawny: "+e.message
+            }]);
+          }
+          setValid(false);
+        }
+      };
+      reader.readAsArrayBuffer(selectedFile);
     }
   }, [selectedFile, setErrors, setSelectedFile]);
   
@@ -56,7 +125,7 @@ function PocztatorForm() {
       {valid && <>
         <Alert severity="success">
           <AlertTitle>Poprawny!</AlertTitle>
-          Twój plik jest poprawny i może być wysłany do Poczty Polskiej
+          Twój plik jest najprawdopodobniej poprawny i może być wysłany do Poczty Polskiej
         </Alert>
         <Typography variant="h5" style={{marginTop: "2em", marginBottom: "1em", textAlign: "center"}}>
           Możesz bezpiecznie wysłać plik do Poczty Polskiej<br />
