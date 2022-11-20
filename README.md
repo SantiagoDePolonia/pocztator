@@ -23,3 +23,7 @@ Aplikacja została stworzona podczas hackathonu HackYeah 2022.
 
 Kody błędów są zgodne z numerami punktów opisanymi w dokumencie opublikowanym na stronie ministerstwa: https://mc.bip.gov.pl/fobjects/download/999150/do-publikacji-minimalne_wymagania_techniczne_v-1-0-pdf.html
 
+
+## Jak uruchomić?
+
+Aplikacja jest prosta w użyciu. Należy wgrać pliki z katalogu `./frontend/build` na serwer http. Należy również odpalić backend. Można do tego użyć dockera i pliku `docker-composer.yml`.
