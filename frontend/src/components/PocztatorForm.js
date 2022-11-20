@@ -69,7 +69,7 @@ function PocztatorForm() {
           // Is A4?
           const dimensions = page.getViewport(1).viewBox.map(n => Math.round(n / 72 * 30));
           console.log("dimensions", dimensions);
-          if(view[2] != 248 || view[3] != 351) {
+          if(dimensions[2] != 248 || dimensions[3] != 351) {
             additionalErrors.push({
               id: "WT_2_2",
               message: "Podany plik nie jest w formacie A4"
@@ -78,6 +78,10 @@ function PocztatorForm() {
 
           console.log("page.view", page.view);
           console.log("page", page);
+          setErrors([...errors, ...additionalErrors]);
+          if(additionalErrors.length){
+            setValid(false);
+          }
         } catch (e) {
           if(e.message === "No password given") {
             setErrors([...errors, {
